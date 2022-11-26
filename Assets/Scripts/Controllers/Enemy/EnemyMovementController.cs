@@ -15,6 +15,29 @@ namespace Controllers.Enemy
         {
             Init();
         }
+        #region EventSubscriptions
+
+        private void OnEnable()
+        {
+            SubscribeEvents();
+        }
+
+        private void SubscribeEvents()
+        {
+            CoreGameSignals.Instance.onChangeGameState += OnChangeGameState;
+        }
+
+        private void UnSubscribeEvents()
+        {
+            CoreGameSignals.Instance.onChangeGameState -= OnChangeGameState;
+        }
+
+        private void OnDisable()
+        {
+            UnSubscribeEvents();
+        }
+
+        #endregion
         
         private void Init()
         {
