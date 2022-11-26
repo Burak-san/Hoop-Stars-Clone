@@ -9,7 +9,8 @@ namespace Signals
     {
         public UnityAction onPlay = delegate {  };
         public UnityAction onReset = delegate {  };
-        public UnityAction onGainScore = delegate {  };
+        public UnityAction onGainPlayerScore = delegate {  };
+        public UnityAction onGainEnemyScore = delegate {  };
         public UnityAction<GameStates> onChangeGameState = delegate {  };
     }
 }

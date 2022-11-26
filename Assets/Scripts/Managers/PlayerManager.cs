@@ -20,11 +20,13 @@ namespace Managers
         private void SubcribedEvents()
         {
             InputSignals.Instance.onInputTaken += _playerMovementController.Move;
+            CoreGameSignals.Instance.onReset += _playerMovementController.TransformReset;
         }
         
         private void UnSubcribedEvents()
         {
             InputSignals.Instance.onInputTaken -= _playerMovementController.Move;
+            CoreGameSignals.Instance.onReset -= _playerMovementController.TransformReset;
         }
 
         private void OnDisable()

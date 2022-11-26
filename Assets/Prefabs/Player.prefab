@@ -165,7 +165,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 40
+  m_Constraints: 56
   m_CollisionDetection: 0
 --- !u!1 &2493424286956576912
 GameObject:
@@ -228,7 +228,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 89730b3c6ab6f2a41a1863ae4dc72e34, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -530,6 +530,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7940663855061430331}
   - component: {fileID: 1099348134564675063}
+  - component: {fileID: 5915172729255621672}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Player
@@ -565,6 +566,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 0.01, z: 1.5}
   m_Center: {x: 0, y: 0.01, z: 0}
+--- !u!114 &5915172729255621672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5353050720521484317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77e1724cfe14440e8bebd15946ac495b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6771422463819652351
 GameObject:
   m_ObjectHideFlags: 0

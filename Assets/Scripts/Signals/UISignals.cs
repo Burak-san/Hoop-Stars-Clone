@@ -9,7 +9,10 @@ namespace Signals
     {
         public UnityAction<UIPanels> onOpenPanel = delegate { };
         public UnityAction<UIPanels> onClosePanel = delegate { };
-        public UnityAction<int> onSetTimeValue = delegate {  };
-        public UnityAction<int> onSetScoreText = delegate {  };
+        public UnityAction onFail = delegate { };
+        public UnityAction onWin = delegate {  };
+        public UnityAction<float> onSetTimeValue = delegate {  };
+        public UnityAction<int> onSetPlayerScoreText = delegate {  };
+        public UnityAction<int> onSetEnemyScoreText = delegate {  };
     }
 }

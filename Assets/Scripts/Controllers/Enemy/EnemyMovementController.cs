@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DG.Tweening;
+using Enums;
+using Signals;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,11 +13,19 @@ namespace Controllers.Enemy
     public class EnemyMovementController : MonoBehaviour
     {
         private Rigidbody _enemyRigidbody;
+        private GameStates _gameStates;
 
         private void Awake()
         {
             Init();
         }
+        
+        private void Init()
+        {
+            _enemyRigidbody = GetComponent<Rigidbody>();
+            _gameStates = GameStates.Stop;
+        }
+        
         #region EventSubscriptions
 
         private void OnEnable()
@@ -25,11 +36,13 @@ namespace Controllers.Enemy
         private void SubscribeEvents()
         {
             CoreGameSignals.Instance.onChangeGameState += OnChangeGameState;
+            CoreGameSignals.Instance.onReset += TransformReset;
         }
 
         private void UnSubscribeEvents()
         {
             CoreGameSignals.Instance.onChangeGameState -= OnChangeGameState;
+            CoreGameSignals.Instance.onReset -= TransformReset;
         }
 
         private void OnDisable()
@@ -39,14 +52,21 @@ namespace Controllers.Enemy
 
         #endregion
         
-        private void Init()
+        private void FixedUpdate()
         {
-            _enemyRigidbody = GetComponent<Rigidbody>();
+            if (_gameStates == GameStates.Playing)
+            {
+                EnemyMove();
+            }
         }
-
-        private void Update()
+        
+        private void OnChangeGameState(GameStates state)
         {
-            EnemyMove();
+            _gameStates = state;
+            if (_gameStates == GameStates.Playing)
+            {
+                _enemyRigidbody.isKinematic = false;
+            }
         }
 
         private void EnemyMove()
@@ -69,6 +89,13 @@ namespace Controllers.Enemy
         private void EnemyRightMove()
         {
             _enemyRigidbody.velocity = new Vector3(2.5f,12,0);
+        }
+        
+        private void TransformReset()
+        {
+            _enemyRigidbody.isKinematic = true;
+            transform.position = new Vector3(3, 6, 0);
+            transform.DORotate(new Vector3(0,0,0), 0.1f);
         }
     }
 }

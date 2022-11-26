@@ -25,24 +25,28 @@ namespace Managers
         {
             UISignals.Instance.onOpenPanel += OnOpenPanel;
             UISignals.Instance.onClosePanel += OnClosePanel;
-            UISignals.Instance.onSetScoreText += OnSetScoreText;
+            UISignals.Instance.onSetPlayerScoreText += OnSetPlayerScoreText;
+            UISignals.Instance.onSetEnemyScoreText += OnSetEnemyScoreText;
             UISignals.Instance.onSetTimeValue += OnSetTimeValue;
+            UISignals.Instance.onFail += OnFail;
+            UISignals.Instance.onWin += OnWin;
             
             CoreGameSignals.Instance.onPlay += OnPlay;
             CoreGameSignals.Instance.onReset += OnReset;
-            CoreGameSignals.Instance.onChangeGameState += OnChangeGameState;
         }
 
         private void UnSubscribeEvents()
         {
             UISignals.Instance.onOpenPanel -= OnOpenPanel;
             UISignals.Instance.onClosePanel -= OnClosePanel;
-            UISignals.Instance.onSetScoreText -= OnSetScoreText;
+            UISignals.Instance.onSetPlayerScoreText -= OnSetPlayerScoreText;
+            UISignals.Instance.onSetEnemyScoreText -= OnSetEnemyScoreText;
             UISignals.Instance.onSetTimeValue -= OnSetTimeValue;
+            UISignals.Instance.onFail -= OnFail;
+            UISignals.Instance.onWin -= OnWin;
             
             CoreGameSignals.Instance.onPlay -= OnPlay;
             CoreGameSignals.Instance.onReset -= OnReset;
-            CoreGameSignals.Instance.onChangeGameState -= OnChangeGameState;
         }
 
         private void OnDisable()
@@ -62,8 +66,6 @@ namespace Managers
             CoreGameSignals.Instance.onReset?.Invoke();
         }
         
-        
-        
         private void OnOpenPanel(UIPanels panel)
         {
             uıPanelController.OpenPanel(panel);
@@ -74,14 +76,32 @@ namespace Managers
             uıPanelController.ClosePanel(panel);
         }
 
-        private void OnSetScoreText(int value)
+        private void OnSetPlayerScoreText(int value)
         {
-            throw new NotImplementedException();
+            playerScoreText.text = value.ToString();
+        }
+        
+        private void OnSetEnemyScoreText(int value)
+        {
+            enemyScoreText.text = value.ToString();
         }
 
-        private void OnSetTimeValue(int value)
+        private void OnSetTimeValue(float value)
         {
-            throw new NotImplementedException();
+            int tempValue = (int)value;
+            timeText.text = tempValue.ToString();
+        }
+
+        private void OnFail()
+        {
+            UISignals.Instance.onClosePanel?.Invoke(UIPanels.GamePanel);
+            UISignals.Instance.onOpenPanel?.Invoke(UIPanels.FailPanel);
+        }
+
+        private void OnWin()
+        {
+            UISignals.Instance.onClosePanel?.Invoke(UIPanels.GamePanel);
+            UISignals.Instance.onOpenPanel?.Invoke(UIPanels.WinPanel);
         }
 
         private void OnPlay()
@@ -90,14 +110,20 @@ namespace Managers
             UISignals.Instance.onOpenPanel?.Invoke(UIPanels.GamePanel);
         }
 
+        private void ResetText()
+        {
+            playerScoreText.text = "0";
+            enemyScoreText.text = "0";
+            timeText.text = "60";
+        }
+
         private void OnReset()
         {
             UISignals.Instance.onOpenPanel?.Invoke(UIPanels.StartPanel);
             UISignals.Instance.onClosePanel?.Invoke(UIPanels.GamePanel);
             UISignals.Instance.onClosePanel?.Invoke(UIPanels.FailPanel);
             UISignals.Instance.onClosePanel?.Invoke(UIPanels.WinPanel);
+            ResetText();
         }
-        
-        
     }
 }

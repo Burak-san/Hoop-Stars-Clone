@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using Enums;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ namespace Controllers.Player
 
         public void Move(PlayerState playerState)
         {
+            _rigidbody.isKinematic = false;
+            
             if (playerState == PlayerState.Left)
             {
                 LeftButtonMove();
@@ -32,24 +35,19 @@ namespace Controllers.Player
 
         private void LeftButtonMove()
         {
-            //_rigidbody.AddForce(new Vector3(-2.5f,5,0),ForceMode.Impulse);
-            _rigidbody.velocity = new Vector3(-2.5f, 5, 0);
-            CheckRigidbodyKinematic();
+            _rigidbody.velocity = new Vector3(-2.5f, 10, 0);
         }
         
         private void RightButtonMove()
         {
-            //_rigidbody.AddForce(new Vector3(2.5f,5,0),ForceMode.Impulse);
-            _rigidbody.velocity = new Vector3(2.5f, 5, 0);
-            CheckRigidbodyKinematic();
+            _rigidbody.velocity = new Vector3(2.5f, 10, 0);
         }
 
-        private void CheckRigidbodyKinematic()
+        public void TransformReset()
         {
-            if (_rigidbody.isKinematic == true)
-            {
-                _rigidbody.isKinematic = false;
-            }
+            _rigidbody.isKinematic = true;
+            transform.position = new Vector3(-3, 6, 0);
+            transform.DORotate(new Vector3(0,0,0), 0.1f);
         }
     }
 }
