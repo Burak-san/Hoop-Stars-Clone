@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Enums;
 using Signals;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Managers
@@ -52,31 +49,16 @@ namespace Managers
 
         private void Update()
         {
-            if (_gameStates == GameStates.Playing)
-            {
-                StartCoroutine(Count());
-            }
+            ScoreCheck();
+        }
 
+        private void ScoreCheck()
+        {
             if (_playerScore >= 3)
             {
                 UISignals.Instance.onWin?.Invoke();
             }
             if (_enemyScore >= 3)
-            {
-                UISignals.Instance.onFail?.Invoke();
-            }
-        }
-
-        private IEnumerator Count()
-        {
-            if (_time > 0)
-            {
-                yield return new WaitForSecondsRealtime(1f);
-                _time -= Time.deltaTime;
-                UISignals.Instance.onSetTimeValue?.Invoke(_time);
-                
-            }
-            else if (_time <= 0)
             {
                 UISignals.Instance.onFail?.Invoke();
             }
@@ -97,6 +79,25 @@ namespace Managers
         private void OnChangeGameState(GameStates state)
         {
             _gameStates = state;
+            Count();
+        }
+        
+        private async void Count()
+        {
+            while (_gameStates == GameStates.Playing)
+            {
+                if (_time > 0)
+                {
+                    await Task.Delay(1000);
+                    _time -= 1;
+                    UISignals.Instance.onSetTimeValue?.Invoke(_time);
+                
+                }
+                else if (_time <= 0)
+                {
+                    UISignals.Instance.onFail?.Invoke();
+                }
+            }
         }
         
 
