@@ -12,7 +12,6 @@ Hoop Stars Clone
 ![movie_002](https://user-images.githubusercontent.com/60696929/204917581-d6108c01-5359-4796-9859-47c1cd483ed6.gif)
 
 
-
 ## Used Unity Packages
 - DOTween
 - TextMeshPro
